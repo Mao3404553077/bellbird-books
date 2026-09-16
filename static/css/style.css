@@ -1,0 +1,106 @@
+:root {
+  --ink: #223127;
+  --leaf: #3f6b4f;
+  --paper: #f7f4ec;
+  --line: #d9d2bf;
+  --accent: #b8860b;
+  --danger: #a33;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+}
+.topbar {
+  background: var(--ink);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar .brand { font-weight: 700; letter-spacing: 0.03em; }
+.topbar nav a {
+  color: #e9e4d2;
+  margin-left: 1rem;
+  text-decoration: none;
+}
+.topbar nav a:hover { color: #fff; text-decoration: underline; }
+.container { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem; }
+.footer {
+  text-align: center;
+  color: #888;
+  font-size: 0.85rem;
+  padding: 1.5rem 0;
+}
+h1, h2, h3 { color: var(--leaf); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin: 1rem 0;
+}
+th, td {
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+th { background: #efe9d6; }
+.btn {
+  display: inline-block;
+  background: var(--leaf);
+  color: #fff;
+  padding: 0.45rem 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.btn.secondary { background: #6c7a89; }
+.btn.danger { background: var(--danger); }
+form.inline { display: inline; }
+.field { margin-bottom: 0.8rem; }
+.field label { display: block; font-weight: 600; margin-bottom: 0.2rem; }
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+}
+.flash {
+  padding: 0.6rem 0.9rem;
+  border-radius: 4px;
+  margin-bottom: 0.8rem;
+}
+.flash-success { background: #dff0d8; color: #2c5e36; }
+.flash-error   { background: #f2dede; color: #a94442; }
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  background: #e7e2cf;
+}
+.badge.placed    { background: #fff3cd; color: #856404; }
+.badge.arrived   { background: #cfe8ff; color: #0c5a9c; }
+.badge.collected { background: #d4edda; color: #155724; }
+.badge.cancelled { background: #f8d7da; color: #721c24; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.card {
+  background: #fff;
+  padding: 1rem 1.2rem;
+  border-left: 4px solid var(--leaf);
+  border-radius: 4px;
+}
+.card .num { font-size: 1.8rem; font-weight: 700; color: var(--leaf); }
+.toolbar { display: flex; gap: 0.6rem; align-items: center; margin: 1rem 0; }
+.toolbar form { display: flex; gap: 0.4rem; }

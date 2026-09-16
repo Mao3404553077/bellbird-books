@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · Bellbird Books{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<p>Welcome to the Bellbird Books internal system. Pick a task below.</p>
+<div class="grid">
+  <a class="card" href="{{ url_for('inventory.list_books') }}">
+    <h3>Stock</h3>
+    <p>Search, add or edit book records.</p>
+  </a>
+  <a class="card" href="{{ url_for('orders.list_orders') }}">
+    <h3>Orders</h3>
+    <p>Track placed, arrived and collected orders.</p>
+  </a>
+  <a class="card" href="{{ url_for('customers.list_customers') }}">
+    <h3>Customers</h3>
+    <p>Look up regular customers and contact details.</p>
+  </a>
+  <a class="card" href="{{ url_for('reports.dashboard') }}">
+    <h3>Reports</h3>
+    <p>Live stock levels and pending order queue.</p>
+  </a>
+</div>
+{% endblock %}
