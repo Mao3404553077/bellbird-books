@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Books · Bellbird Books{% endblock %}
+{% block content %}
+<h1>Book inventory</h1>
+<div class="toolbar">
+  <form method="get">
+    <input type="text" name="q" value="{{ q }}"
+           placeholder="Search title, author, shelf, ISBN…" data-autosubmit>
+    <select name="kind">
+      <option value="">All titles</option>
+      <option value="new" {{ 'selected' if kind=='new' }}>New only</option>
+      <option value="used" {{ 'selected' if kind=='used' }}>Second-hand only</option>
+    </select>
+    <button class="btn" type="submit">Search</button>
+  </form>
+  <a class="btn" href="{{ url_for('inventory.new_book') }}">+ Add book</a>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th><th>Author</th><th>Shelf</th>
+      <th>Type</th><th>Stock</th><th>Price</th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for b in books %}
+    <tr>
+      <td><a href="{{ url_for('inventory.detail', book_id=b.id) }}">{{ b.title }}</a></td>
+      <td>{{ b.author }}</td>
+      <td>{{ b.location_shelf }}</td>
+      <td><span class="badge">{{ 'New' if b.is_new else 'Used' }}</span></td>
+      <td>
+        {%- if b.is_new -%}
+          {{ b.quantity }} on shelf
+        {%- else -%}
+          {{ b.used_stock }} of {{ b.copies.count() }} copy/copies
+        {%- endif -%}
+      </td>
+      <td>${{ '%.2f'|format(b.price_cents/100) }}</td>
+      <td><a class="btn secondary" href="{{ url_for('inventory.edit_book', book_id=b.id) }}">Edit</a></td>
+    </tr>
+  {% else %}
+    <tr><td colspan="7">No books match your search.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
