@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ book.title }}{% endblock %}
+{% block content %}
+<h1>{{ book.title }} <span class="badge">{{ 'New' if book.is_new else 'Used' }}</span></h1>
+<p><strong>Author:</strong> {{ book.author }}</p>
+<p><strong>ISBN:</strong> {{ book.isbn or '—' }}</p>
+<p><strong>Shelf:</strong> {{ book.location_shelf }}</p>
+<p><strong>Price:</strong> ${{ '%.2f'|format(book.price_cents/100) }}</p>
+
+{% if book.is_new %}
+  <p><strong>Quantity on hand:</strong> {{ book.quantity }}</p>
+{% else %}
+  <h3>Copies</h3>
+  <table>
+    <thead><tr><th>#</th><th>Condition</th><th>Status</th><th>Acquired</th></tr></thead>
+    <tbody>
+    {% for c in book.copies %}
+      <tr>
+        <td>{{ c.id }}</td>
+        <td>{{ c.condition }}</td>
+        <td>{{ 'Sold' if c.is_sold else 'On shelf' }}</td>
+        <td>{{ c.acquired_date }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+{% if book.notes %}<p><strong>Notes:</strong> {{ book.notes }}</p>{% endif %}
+
+<a class="btn" href="{{ url_for('inventory.edit_book', book_id=book.id) }}">Edit</a>
+<form class="inline" method="post"
+      action="{{ url_for('inventory.delete_book', book_id=book.id) }}"
+      data-confirm="Delete this book record? This cannot be undone.">
+  <button class="btn danger" type="submit">Delete</button>
+</form>
+<a class="btn secondary" href="{{ url_for('inventory.list_books') }}">Back</a>
+{% endblock %}
