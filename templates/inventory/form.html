@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if book else 'Add' }} book{% endblock %}
+{% block content %}
+<h1>{{ 'Edit' if book else 'Add new book record' }}</h1>
+<form method="post">
+  <div class="field">
+    <label>Title</label>
+    <input name="title" required value="{{ book.title if book else '' }}">
+  </div>
+  <div class="field">
+    <label>Author</label>
+    <input name="author" required value="{{ book.author if book else '' }}">
+  </div>
+  <div class="field">
+    <label>ISBN</label>
+    <input name="isbn" value="{{ book.isbn if book else '' }}">
+  </div>
+  <div class="field">
+    <label>Shelf location</label>
+    <input name="location_shelf" required
+           placeholder="e.g. Fiction-A3"
+           value="{{ book.location_shelf if book else '' }}">
+  </div>
+  <div class="field">
+    <label>Price (AUD)</label>
+    <input name="price" step="0.01" required
+           value="{{ '%.2f'|format(book.price_cents/100) if book else '' }}">
+  </div>
+  <div class="field">
+    <label>
+      <input type="checkbox" name="is_new"
+             {{ 'checked' if (not book or book.is_new) }}>
+      New book (quantity-tracked)
+    </label>
+  </div>
+  <div class="field">
+    <label>Quantity on hand (new books only)</label>
+    <input name="quantity" type="number" min="0"
+           value="{{ book.quantity if book else 0 }}">
+  </div>
+  {% if not book or not book.is_new %}
+  <div class="field">
+    <label>Condition of first copy (used books)</label>
+    <select name="condition">
+      {% for c in conditions %}
+        <option>{{ c }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  {% endif %}
+  <div class="field">
+    <label>Notes</label>
+    <textarea name="notes" rows="3">{{ book.notes if book else '' }}</textarea>
+  </div>
+  <button class="btn" type="submit">Save</button>
+  <a class="btn secondary" href="{{ url_for('inventory.list_books') }}">Cancel</a>
+</form>
+{% endblock %}
