@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ customer.name }}{% endblock %}
+{% block content %}
+<h1>{{ customer.name }}</h1>
+<p><strong>Phone:</strong> {{ customer.phone or '—' }}</p>
+<p><strong>Email:</strong> {{ customer.email or '—' }}</p>
+{% if customer.notes %}<p><strong>Notes:</strong> {{ customer.notes }}</p>{% endif %}
+
+<h3>Orders</h3>
+<table>
+  <thead><tr><th>#</th><th>Date</th><th>Status</th><th>Total</th></tr></thead>
+  <tbody>
+  {% for o in customer.orders %}
+    <tr>
+      <td><a href="{{ url_for('orders.detail', order_id=o.id) }}">#{{ o.id }}</a></td>
+      <td>{{ o.order_date.strftime('%Y-%m-%d') }}</td>
+      <td><span class="badge {{ o.status }}">{{ o.status }}</span></td>
+      <td>{{ o.total_display }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="4">No orders yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+<a class="btn secondary" href="{{ url_for('customers.list_customers') }}">Back</a>
+{% endblock %}
