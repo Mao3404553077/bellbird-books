@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}New order{% endblock %}
+{% block content %}
+<h1>New order</h1>
+<form method="post">
+  <div class="field">
+    <label>Customer</label>
+    <select name="customer_id" required>
+      <option value="">— select customer —</option>
+      {% for c in customers %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <h3>Items</h3>
+  <table>
+    <thead><tr><th></th><th>Title</th><th>Type</th><th>Price</th><th>Qty</th></tr></thead>
+    <tbody>
+    {% for b in books %}
+      <tr>
+        <td><input type="checkbox" name="book_id" value="{{ b.id }}"></td>
+        <td>{{ b.title }} <small>({{ b.author }})</small></td>
+        <td>{{ 'New' if b.is_new else 'Used' }}</td>
+        <td>${{ '%.2f'|format(b.price_cents/100) }}</td>
+        <td>
+          {% if b.is_new %}
+            <input type="number" name="qty_{{ b.id }}" value="1" min="1" max="{{ b.quantity }}" style="width:70px">
+          {% else %}
+            <em>1 copy</em>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="field">
+    <label>Notes</label>
+    <textarea name="notes" rows="2"></textarea>
+  </div>
+  <button class="btn" type="submit">Create order</button>
+  <a class="btn secondary" href="{{ url_for('orders.list_orders') }}">Cancel</a>
+</form>
+{% endblock %}
