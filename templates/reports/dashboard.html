@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<h1>Reports</h1>
+<div class="grid">
+  <div class="card"><div class="num">{{ total_titles }}</div>titles on file</div>
+  <div class="card"><div class="num">{{ new_titles }}</div>new titles</div>
+  <div class="card"><div class="num">{{ used_titles }}</div>used titles</div>
+  <div class="card"><div class="num">{{ used_copies_unsold }}</div>used copies on shelf</div>
+</div>
+
+<h2>Pending orders</h2>
+<table>
+  <thead><tr><th>#</th><th>Customer</th><th>Placed</th><th>Status</th><th>Total</th></tr></thead>
+  <tbody>
+  {% for o in pending_orders %}
+    <tr>
+      <td><a href="{{ url_for('orders.detail', order_id=o.id) }}">#{{ o.id }}</a></td>
+      <td>{{ o.customer.name }}</td>
+      <td>{{ o.order_date.strftime('%Y-%m-%d') }}</td>
+      <td><span class="badge {{ o.status }}">{{ o.status }}</span></td>
+      <td>{{ o.total_display }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5">No pending orders. Great.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>Low stock (new books ≤ 3 copies)</h2>
+<table>
+  <thead><tr><th>Title</th><th>Author</th><th>Shelf</th><th>Left</th></tr></thead>
+  <tbody>
+  {% for b in low_stock %}
+    <tr><td>{{ b.title }}</td><td>{{ b.author }}</td>
+        <td>{{ b.location_shelf }}</td><td>{{ b.quantity }}</td></tr>
+  {% else %}
+    <tr><td colspan="4">Nothing below the reorder threshold.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
