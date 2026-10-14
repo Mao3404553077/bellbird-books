@@ -1,7 +1,7 @@
 """Counter-facing reports: live stock levels and pending order queue."""
 from flask import Blueprint, render_template
 
-from app import db
+from extensions import db
 from models import Book, Order, BookCopy
 
 bp = Blueprint("reports", __name__)

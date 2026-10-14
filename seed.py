@@ -4,7 +4,7 @@ Usage:
     flask --app app shell
     >>> from seed import load_demo_data; load_demo_data()
 """
-from app import db
+from extensions import db
 from models import Book, BookCopy, Customer, Order, OrderItem
 
 

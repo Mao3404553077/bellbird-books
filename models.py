@@ -9,7 +9,7 @@ Core domain rules (drawn from the Project Charter):
   cancelled as an exit.
 """
 from datetime import datetime, date
-from app import db
+from extensions import db
 
 
 # --- Look-up tables -----------------------------------------------------

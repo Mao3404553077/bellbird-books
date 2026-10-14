@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from sqlalchemy import or_
 
-from app import db
+from extensions import db
 from models import Book, BookCopy, BOOK_CONDITIONS
 
 bp = Blueprint("inventory", __name__)

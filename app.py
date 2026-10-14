@@ -5,13 +5,9 @@ Run locally with:
 """
 import os
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 from config import CONFIG
-
-db = SQLAlchemy()
-migrate = Migrate()
+from extensions import db, migrate
 
 
 def create_app(config_name: str | None = None) -> Flask:
@@ -49,3 +45,7 @@ app = create_app()
 
 with app.app_context():
     db.create_all()
+
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=5000, debug=True)
